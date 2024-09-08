@@ -2,9 +2,11 @@ package com.anily.demosecurity.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class DemoSecurityConfig {
@@ -32,5 +34,19 @@ public class DemoSecurityConfig {
         return new InMemoryUserDetailsManager(tyrande, illidan, malfurion);
     }
 
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(cofigurer ->
+                        cofigurer
+                                .anyRequest().authenticated()
+                )
+                .formLogin(form ->
+                        form
+                                .loginPage("/loginPage")
+                                .loginProcessingUrl("/authenticateTheUser")
+                                .permitAll()
+                );
+        return httpSecurity.build();
+    }
 
 }
