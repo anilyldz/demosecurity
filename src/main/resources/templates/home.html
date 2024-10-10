@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Anil Star's Home Page</title>
@@ -9,6 +10,12 @@
     <hr>
     <p>
     Welcome to the Anil Star's Home Page
+    </p>
+
+    <p>
+        User : <span sec:authentication="principal.username"></span>
+        <br><br>
+        Role(s) : <span sec:authentication="principal.authorities"></span>
     </p>
 
     <form action="#" th:action="@{/logout}" method="POST">
